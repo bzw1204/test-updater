@@ -3,13 +3,14 @@ on:
   push:
     tags:
       - v*.*.*
-
 jobs:
   release:
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [windows-latest]
+
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
@@ -19,16 +20,21 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install Dependencies
-        run: npm install
+      - name: Install pnpm and install Dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install
+
       - name: build-win
         if: matrix.os == 'windows-latest'
-        run: npm run build:win
+        run: pnpm build:win
+        # env:
+        #   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: release
         uses: softprops/action-gh-release@v1
         with:
-          draft: true
+          draft: false
           files: |
             dist/*.exe
             dist/*.zip
@@ -41,4 +47,11 @@ jobs:
             dist/*.yml
             dist/*.blockmap
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: git@github.com:bzw1204/xray-client.git
+          BRANCH: gh-pages
+          FOLDER: dist
+          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
