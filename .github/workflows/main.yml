@@ -1,8 +1,8 @@
 name: 发布新版本
 on:
   push:
-    tags:
-      - v*.*.*
+    branches:
+      - main
 jobs:
   release:
     runs-on: ${{ matrix.os }}
