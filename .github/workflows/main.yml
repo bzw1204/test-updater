@@ -1,5 +1,4 @@
-name: Build/release Electron app
-
+name: 发布新版本
 on:
   push:
     tags:
