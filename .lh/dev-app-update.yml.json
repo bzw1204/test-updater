@@ -1,0 +1,22 @@
+{
+    "sourceFile": "dev-app-update.yml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1702374761348,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1702374798547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n # provider: generic\n # url: https://example.com/auto-updates\n-publish:\n-  provider: github\n-  owner: bzw1204\n-  repo: test-updater\n+\n+provider: github\n+owner: bzw1204\n+repo: test-updater\n updaterCacheDirName: test-updater-updater\n"
+                }
+            ],
+            "date": 1702374761348,
+            "name": "Commit-0",
+            "content": "# provider: generic\n# url: https://example.com/auto-updates\npublish:\n  provider: github\n  owner: bzw1204\n  repo: test-updater\nupdaterCacheDirName: test-updater-updater\n"
+        }
+    ]
+}

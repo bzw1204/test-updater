@@ -1,0 +1,7 @@
+# provider: generic
+# url: https://example.com/auto-updates
+
+provider: github
+owner: bzw1204
+repo: test-updater
+updaterCacheDirName: test-updater-updater

@@ -1,0 +1,22 @@
+{
+    "sourceFile": "electron-builder.yml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1702374049851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1702374745801,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,50 @@\n+appId: com.electron.app\n+productName: test-updater\n+directories:\n+  buildResources: build\n+files:\n+  - '!**/.vscode/*'\n+  - '!src/*'\n+  - '!electron.vite.config.{js,ts,mjs,cjs}'\n+  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'\n+  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'\n+  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'\n+asarUnpack:\n+  - resources/**\n+win:\n+  executableName: test-updater\n+  target:\n+    - target: \"nsis\"\n+      arch: [\"x64\", \"ia32\"]\n+nsis:\n+  artifactName: ${name}-${version}-setup.${ext}\n+  shortcutName: ${productName}\n+  uninstallDisplayName: ${productName}\n+  createDesktopShortcut: always\n+mac:\n+  entitlementsInherit: build/entitlements.mac.plist\n+  extendInfo:\n+    - NSCameraUsageDescription: Application requests access to the device's camera.\n+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.\n+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.\n+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.\n+  notarize: false\n+dmg:\n+  artifactName: ${name}-${version}.${ext}\n+linux:\n+  target:\n+    - AppImage\n+    - snap\n+    - deb\n+  maintainer: electronjs.org\n+  category: Utility\n+appImage:\n+  artifactName: ${name}-${version}.${ext}\n+npmRebuild: false\n+# publish:\n+#   provider: generic\n+#   url: https://example.com/auto-updates\n+publish:\n+  provider: github\n+  owner: bzw1204\n+  repo: test-updater\n"
+                }
+            ],
+            "date": 1702374049851,
+            "name": "Commit-0",
+            "content": "appId: com.electron.app\nproductName: test-updater\ndirectories:\n  buildResources: build\nfiles:\n  - '!**/.vscode/*'\n  - '!src/*'\n  - '!electron.vite.config.{js,ts,mjs,cjs}'\n  - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'\n  - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'\n  - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'\nasarUnpack:\n  - resources/**\nwin:\n  executableName: test-updater\n  target:\n    - target: \"nsis\"\n      arch: [\"x64\", \"ia32\"]\nnsis:\n  artifactName: ${name}-${version}-setup.${ext}\n  shortcutName: ${productName}\n  uninstallDisplayName: ${productName}\n  createDesktopShortcut: always\nmac:\n  entitlementsInherit: build/entitlements.mac.plist\n  extendInfo:\n    - NSCameraUsageDescription: Application requests access to the device's camera.\n    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.\n    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.\n    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.\n  notarize: false\ndmg:\n  artifactName: ${name}-${version}.${ext}\nlinux:\n  target:\n    - AppImage\n    - snap\n    - deb\n  maintainer: electronjs.org\n  category: Utility\nappImage:\n  artifactName: ${name}-${version}.${ext}\nnpmRebuild: false\npublish:\n  provider: generic\n  url: https://example.com/auto-updates\n"
+        }
+    ]
+}

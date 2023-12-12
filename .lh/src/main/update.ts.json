@@ -1,0 +1,42 @@
+{
+    "sourceFile": "src/main/update.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1702374168894,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1702374176646,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n import { BrowserWindow, ipcMain } from 'electron'\n import { ProgressInfo, autoUpdater } from 'electron-updater'\n import { join } from 'path'\n+import { isDev } from './utils'\n \n export default (win: BrowserWindow) => {\n   // 定义返回给渲染层的相关提示文案\n   const message = {\n@@ -20,9 +21,8 @@\n   const contents = win.webContents\n \n   // 检测下载错误\n   autoUpdater.on('error', (error) => {\n-    logger.error('检查更新出错', error)\n     contents.send('update-message', '检查更新失败，请稍后再试！')\n   })\n   // 检测是否需要更新\n   autoUpdater.on('checking-for-update', () => {\n"
+                },
+                {
+                    "date": 1702374185575,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,15 +25,12 @@\n     contents.send('update-message', '检查更新失败，请稍后再试！')\n   })\n   // 检测是否需要更新\n   autoUpdater.on('checking-for-update', () => {\n-    logger.info('checking-for-update')\n     contents.send('update-message', message.checking)\n   })\n   // 检测到可以更新时\n   autoUpdater.on('update-available', (info: IUpdateInfo) => {\n-    // 这里我们可以做一个提示，让用户自己选择是否进行更新\n-    store.set('forceUpdate', info?.force || false)\n     const updateMessage = {\n       version: info.version || '',\n       notes: info.notes || [],\n       force: info.force || false\n"
+                },
+                {
+                    "date": 1702374193215,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,9 +45,9 @@\n     try {\n       await autoUpdater.checkForUpdates()\n       return true\n     } catch (error) {\n-      logger.error('更新检测失败', error)\n+      console.error('更新检测失败', error)\n       return null\n     }\n   })\n \n"
+                },
+                {
+                    "date": 1702374198926,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -68,15 +68,14 @@\n   })\n \n   // 当需要更新的内容下载完成后\n   autoUpdater.on('update-downloaded', () => {\n-    logger.info('下载已完成')\n+    console.info('下载已完成')\n     // 给用户一个提示，然后重启应用；或者直接重启也可以，只是这样会显得很突兀\n     contents.send('download-end', '安装程序已准备就绪，应用重启后并进行安装')\n   })\n \n   // 推出并安装\n   ipcMain.on('quitAndInstall', (_event, status: boolean) => {\n     status && setImmediate(() => autoUpdater.quitAndInstall())\n-    store.set('forceUpdate', !status)\n   })\n }\n"
+                },
+                {
+                    "date": 1702374221658,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n import { BrowserWindow, ipcMain } from 'electron'\n-import { ProgressInfo, autoUpdater } from 'electron-updater'\n+import { ProgressInfo, UpdateInfo, autoUpdater } from 'electron-updater'\n import { join } from 'path'\n import { isDev } from './utils'\n \n export default (win: BrowserWindow) => {\n@@ -28,13 +28,11 @@\n   autoUpdater.on('checking-for-update', () => {\n     contents.send('update-message', message.checking)\n   })\n   // 检测到可以更新时\n-  autoUpdater.on('update-available', (info: IUpdateInfo) => {\n+  autoUpdater.on('update-available', (info: UpdateInfo) => {\n     const updateMessage = {\n-      version: info.version || '',\n-      notes: info.notes || [],\n-      force: info.force || false\n+      version: info.version || ''\n     }\n     contents.send('new-version', updateMessage)\n     // 也可以默认直接更新，二选一即可\n     // autoUpdater.downloadUpdate();\n"
+                },
+                {
+                    "date": 1702374237698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -21,8 +21,9 @@\n   const contents = win.webContents\n \n   // 检测下载错误\n   autoUpdater.on('error', (error) => {\n+    console.error(error)\n     contents.send('update-message', '检查更新失败，请稍后再试！')\n   })\n   // 检测是否需要更新\n   autoUpdater.on('checking-for-update', () => {\n"
+                }
+            ],
+            "date": 1702374168894,
+            "name": "Commit-0",
+            "content": "import { BrowserWindow, ipcMain } from 'electron'\nimport { ProgressInfo, autoUpdater } from 'electron-updater'\nimport { join } from 'path'\n\nexport default (win: BrowserWindow) => {\n  // 定义返回给渲染层的相关提示文案\n  const message = {\n    error: '检查更新出错',\n    checking: '正在检查更新……',\n    updateAva: '检测到新版本，正在下载……',\n    updateNotAva: '现在使用的就是最新版本，不用更新'\n  }\n\n  autoUpdater.autoDownload = false\n  // 这里是为了在本地做应用升级测试使用\n  if (isDev) {\n    autoUpdater.forceDevUpdateConfig = true\n    autoUpdater.updateConfigPath = join(__dirname, '../../dev-app-update.yml')\n  }\n  const contents = win.webContents\n\n  // 检测下载错误\n  autoUpdater.on('error', (error) => {\n    logger.error('检查更新出错', error)\n    contents.send('update-message', '检查更新失败，请稍后再试！')\n  })\n  // 检测是否需要更新\n  autoUpdater.on('checking-for-update', () => {\n    logger.info('checking-for-update')\n    contents.send('update-message', message.checking)\n  })\n  // 检测到可以更新时\n  autoUpdater.on('update-available', (info: IUpdateInfo) => {\n    // 这里我们可以做一个提示，让用户自己选择是否进行更新\n    store.set('forceUpdate', info?.force || false)\n    const updateMessage = {\n      version: info.version || '',\n      notes: info.notes || [],\n      force: info.force || false\n    }\n    contents.send('new-version', updateMessage)\n    // 也可以默认直接更新，二选一即可\n    // autoUpdater.downloadUpdate();\n    // sendUpdateMessage(message.updateAva);\n  })\n\n  ipcMain.handle('check-update', async () => {\n    try {\n      await autoUpdater.checkForUpdates()\n      return true\n    } catch (error) {\n      logger.error('更新检测失败', error)\n      return null\n    }\n  })\n\n  ipcMain.on('download-update', (_e, status: boolean) => {\n    status && autoUpdater.downloadUpdate()\n  })\n\n  // 检测到不需要更新时\n  autoUpdater.on('update-not-available', () => {\n    // 这里可以做静默处理，不给渲染进程发通知，或者通知渲染进程当前已是最新版本，不需要更新\n    contents.send('update-message', '当前已是最新版本')\n  })\n\n  // 更新下载进度\n  autoUpdater.on('download-progress', (progress: ProgressInfo) => {\n    // 直接把当前的下载进度发送给渲染进程即可，有渲染层自己选择如何做展示\n    contents.send('download-progress', progress)\n  })\n\n  // 当需要更新的内容下载完成后\n  autoUpdater.on('update-downloaded', () => {\n    logger.info('下载已完成')\n    // 给用户一个提示，然后重启应用；或者直接重启也可以，只是这样会显得很突兀\n    contents.send('download-end', '安装程序已准备就绪，应用重启后并进行安装')\n  })\n\n  // 推出并安装\n  ipcMain.on('quitAndInstall', (_event, status: boolean) => {\n    status && setImmediate(() => autoUpdater.quitAndInstall())\n    store.set('forceUpdate', !status)\n  })\n}\n"
+        }
+    ]
+}

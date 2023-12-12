@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/main/utils.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1702374150190,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1702374160908,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,4 @@\n-import { app } from 'electron'\n-import logger from './logger'\n \n // 是否是开发环境\n export const isDev = process.env.NODE_ENV === 'development'\n // 是否是Mac\n@@ -8,36 +6,4 @@\n // 是否是Win\n export const isWin = process.platform === 'win32'\n // 是否是Linux\n export const isLinux = process.platform === 'linux'\n-\n-/**\n- * 设置开机自启\n- * @param autoLaunch 是否开机自启\n- * @returns 设置结果\n- */\n-export function setAutoLaunch(autoLaunch: boolean): boolean {\n-  if (isLinux) return false\n-  if (!app.isPackaged) {\n-    // APP未打包所以不支持开机自启\n-    logger.warn('APP未打包所以不支持开机自启')\n-    return false\n-  }\n-  const isOpenAtLogin = (): boolean => {\n-    return app.getLoginItemSettings().openAtLogin\n-  }\n-\n-  if (isOpenAtLogin() === autoLaunch) {\n-    return true\n-  }\n-  app.setLoginItemSettings({\n-    openAtLogin: autoLaunch,\n-    openAsHidden: false,\n-    path: process.execPath\n-  })\n-  return isOpenAtLogin() === autoLaunch\n-}\n-\n-export function replaceAll(str: string, findText: string, replaceText: string) {\n-  const regExp = new RegExp(findText, 'g')\n-  return str.replace(regExp, replaceText)\n-}\n"
+                }
+            ],
+            "date": 1702374150190,
+            "name": "Commit-0",
+            "content": "import { app } from 'electron'\nimport logger from './logger'\n\n// 是否是开发环境\nexport const isDev = process.env.NODE_ENV === 'development'\n// 是否是Mac\nexport const isMac = process.platform === 'darwin'\n// 是否是Win\nexport const isWin = process.platform === 'win32'\n// 是否是Linux\nexport const isLinux = process.platform === 'linux'\n\n/**\n * 设置开机自启\n * @param autoLaunch 是否开机自启\n * @returns 设置结果\n */\nexport function setAutoLaunch(autoLaunch: boolean): boolean {\n  if (isLinux) return false\n  if (!app.isPackaged) {\n    // APP未打包所以不支持开机自启\n    logger.warn('APP未打包所以不支持开机自启')\n    return false\n  }\n  const isOpenAtLogin = (): boolean => {\n    return app.getLoginItemSettings().openAtLogin\n  }\n\n  if (isOpenAtLogin() === autoLaunch) {\n    return true\n  }\n  app.setLoginItemSettings({\n    openAtLogin: autoLaunch,\n    openAsHidden: false,\n    path: process.execPath\n  })\n  return isOpenAtLogin() === autoLaunch\n}\n\nexport function replaceAll(str: string, findText: string, replaceText: string) {\n  const regExp = new RegExp(findText, 'g')\n  return str.replace(regExp, replaceText)\n}\n"
+        }
+    ]
+}

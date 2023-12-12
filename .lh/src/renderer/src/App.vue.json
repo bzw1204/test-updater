@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/renderer/src/App.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1702374428816,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1702374480423,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,13 @@\n+<template>\n+  <Versions></Versions>\n+  <button @click=\"checkUpdate\">检测更新</button>\n+</template>\n <script setup lang=\"ts\">\n import Versions from './components/Versions.vue'\n+\n+const checkUpdate = window.electron.ipcRenderer.invoke('checking-for-update')\n </script>\n \n-<template>\n-  <Versions></Versions>\n-</template>\n-\n <style lang=\"less\">\n @import './assets/css/styles.less';\n </style>\n"
+                },
+                {
+                    "date": 1702374504702,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n </template>\n <script setup lang=\"ts\">\n import Versions from './components/Versions.vue'\n \n-const checkUpdate = window.electron.ipcRenderer.invoke('checking-for-update')\n+const checkUpdate = () => window.electron.ipcRenderer.invoke('checking-for-update')\n </script>\n \n <style lang=\"less\">\n @import './assets/css/styles.less';\n"
+                },
+                {
+                    "date": 1702374636126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,12 +1,14 @@\n <template>\n   <Versions></Versions>\n   <button @click=\"checkUpdate\">检测更新</button>\n+  <button @click=\"download\">下载更新</button>\n </template>\n <script setup lang=\"ts\">\n import Versions from './components/Versions.vue'\n \n const checkUpdate = () => window.electron.ipcRenderer.invoke('checking-for-update')\n+const download = () => window.electron.ipcRenderer.send('download-update', true)\n </script>\n \n <style lang=\"less\">\n @import './assets/css/styles.less';\n"
+                }
+            ],
+            "date": 1702374428816,
+            "name": "Commit-0",
+            "content": "<script setup lang=\"ts\">\nimport Versions from './components/Versions.vue'\n</script>\n\n<template>\n  <Versions></Versions>\n</template>\n\n<style lang=\"less\">\n@import './assets/css/styles.less';\n</style>\n"
+        }
+    ]
+}
