@@ -51,7 +51,7 @@ jobs:
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: git@github.com:bzw1204/xray-client.git
+          REPO: git@github.com:bzw1204/test-updater.git
           BRANCH: gh-pages
           FOLDER: dist
           SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
