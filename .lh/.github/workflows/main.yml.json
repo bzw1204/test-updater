@@ -1,0 +1,18 @@
+{
+    "sourceFile": ".github/workflows/main.yml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1702375970538,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1702375970538,
+            "name": "Commit-0",
+            "content": "name: 发布新版本\non:\n  push:\n    tags:\n      - v*.*.*\n\njobs:\n  release:\n    runs-on: ${{ matrix.os }}\n    strategy:\n      matrix:\n        os: [windows-latest]\n    steps:\n      - name: Check out Git repository\n        uses: actions/checkout@v3\n\n      - name: Install Node.js\n        uses: actions/setup-node@v3\n        with:\n          node-version: 16\n\n      - name: Install Dependencies\n        run: npm install\n      - name: build-win\n        if: matrix.os == 'windows-latest'\n        run: npm run build:win\n\n      - name: release\n        uses: softprops/action-gh-release@v1\n        with:\n          draft: true\n          files: |\n            dist/*.exe\n            dist/*.zip\n            dist/*.dmg\n            dist/*.AppImage\n            dist/*.snap\n            dist/*.deb\n            dist/*.rpm\n            dist/*.tar.gz\n            dist/*.yml\n            dist/*.blockmap\n        env:\n          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}\n"
+        }
+    ]
+}
